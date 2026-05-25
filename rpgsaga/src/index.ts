@@ -1,18 +1,24 @@
-export function sum(a: number, b: number): number {
-  return a + b;
+import { Game } from "./game";
+function main(): void {
+  console.log("\n" + "=".repeat(60));
+  console.log("ДОБРО ПОЖАЛОВАТЬ В AKVELON RPG SAGA!");
+  console.log("=".repeat(60));
+  const readline = require("readline").createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  readline.question("Введите количество игроков (чётное число, 2-20): ", (answer: string) => {
+    const playerCount = parseInt(answer);
+    if (isNaN(playerCount) || playerCount % 2 !== 0 || playerCount < 2) {
+      console.log(" Ошибка: количество игроков должно быть чётным и не менее 2!");
+      readline.close();
+      return;
+    }
+    console.log(`\n Создаётся турнир с ${playerCount} игроками...\n`);
+    const game = new Game(playerCount);
+    const champion = game.startTournament();
+    console.log(`\n ПОБЕДИТЕЛЬ ТУРНИРА: ${champion.getDisplayName()}! `);
+    readline.close();
+  });
 }
-
-// Example usage of the addNumbers function
-console.log("Hello world");
-
-// Adding two integers
-const result1 = sum(5, 3);
-console.log(`5 + 3 = ${result1}`);
-
-// Adding two floating-point numbers
-const result2 = sum(2.5, 3.7);
-console.log(`2.5 + 3.7 = ${result2}`);
-
-// Adding an integer and a floating-point number
-const result3 = sum(10, 4.2);
-console.log(`10 + 4.2 = ${result3}`);
+main();
